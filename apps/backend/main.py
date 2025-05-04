@@ -1,7 +1,5 @@
 from fastapi import FastAPI
+from apps.backend.api.visualize import router
 
 app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"message": "Hello, World from FastAPI!"}
+app.include_router(router)
