@@ -4,6 +4,3 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# Uploaded files directory
-uploaded_files

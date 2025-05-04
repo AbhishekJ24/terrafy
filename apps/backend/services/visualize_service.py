@@ -1,17 +1,14 @@
 from fastapi import UploadFile
-from apps.backend.utils.file_utils import save_upload_file
-from apps.backend.services.parser import parse_tf_file
+from apps.backend.services.parser_service import parse_tf_file, transform_to_schema
+from apps.backend.models.responses import SuccessResponse
 
 async def handle_visualization(file: UploadFile):
-    # Save the uploaded file locally (optional in prod)
-    UPLOAD_DIR = "apps/backend/uploaded_files"
-    file_path = save_upload_file(file, UPLOAD_DIR)
-
-    # Parse the Terraform file
     parsed_data = await parse_tf_file(file)
-
-    return {
+    transformed_data = transform_to_schema(parsed_data)
+    data = {
         "filename": file.filename,
-        "path": file_path,
         "parsed": parsed_data,
+        "transformed": transformed_data
     }
+    return SuccessResponse(data=data)
+
