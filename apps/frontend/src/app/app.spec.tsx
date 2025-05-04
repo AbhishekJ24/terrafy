@@ -1,26 +1,13 @@
-import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-
+import { render, screen } from '@testing-library/react';
 import App from './app';
+import { describe, it, expect } from 'vitest';
 
-describe('App', () => {
-  it('should render successfully', () => {
-    const { baseElement } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    );
-    expect(baseElement).toBeTruthy();
-  });
+describe('App component', () => {
+  it('displays the welcome message', () => {
+    render(<App />);
 
-  it('should have a greeting as the title', () => {
-    const { getAllByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    );
-    expect(
-      getAllByText(new RegExp('Welcome @terrafy/frontend', 'gi')).length > 0
-    ).toBeTruthy();
+    const welcomeText = screen.getByText(/welcome to terrafy/i);
+
+    expect(welcomeText).toBeTruthy();
   });
 });
